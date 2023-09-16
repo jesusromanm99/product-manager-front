@@ -11,19 +11,24 @@ export interface User {
   isSuperUser: boolean;
 }
 
-export interface Categoria {
+export interface Category {
   id: number;
   name: string;
 }
 
-export interface Imagen {
-  id: number;
-  url: string;
+export interface Image {
+  image: string;
 }
 
 export interface Product {
-  Nombre: string;
-  Estado: string;
-  Categorías: Categoria[];
-  Imágenes: Imagen[];
+  name: string;
+  status: string;
+  categories: Category[];
+  images: Image[];
+}
+
+export interface FiltersProduct {
+  name: string;
+  status: string;
+  category: string;
 }

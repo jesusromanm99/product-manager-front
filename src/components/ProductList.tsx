@@ -1,31 +1,49 @@
 import { Product } from "../utils/interface";
-import PageTitle from "./PageTitle";
 
 interface ProductListProps {
   products: Product[];
+  onEdit: (product: Product) => void;
+  onDelete: (product: Product) => void;
 }
 
-const ProductList = ({ products }: ProductListProps) => {
+const ProductList = ({ products, onEdit, onDelete }: ProductListProps) => {
   return (
     <div>
-      <PageTitle title='lista de Productos' />
       <ul>
         {products.map((product, index) => (
-          <li key={index} className='border rounded-lg p-4 mb-4 shadow-md'>
-            <h3 className='text-lg font-semibold'>{product.Nombre}</h3>
-            <p className='text-gray-600'>Estado: {product.Estado}</p>
-            <p className='text-gray-600'>Categorías:</p>
+          <li key={index} className='border rounded-lg p-4 mb-4 '>
+            <div className='flex justify-between items-center mb-2'>
+              <h3 className='text-lg font-semibold'>{product.name}</h3>
+              <div>
+                <button
+                  className='text-blue-900 border border-blue-900 rounded px-1  hover:bg-blue-900 hover:text-white mr-2'
+                  onClick={() => onEdit(product)}
+                >
+                  Edit
+                </button>
+                <button
+                  className='border border-red-700 rounded px-1  text-red-700 hover:bg-red-700 hover:text-white'
+                  onClick={() => onDelete(product)}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+            <p className='text-gray-600'>
+              Status: {product.status == "AC" ? "Active" : "Inactive"}
+            </p>
+            <p className='text-gray-600'>Categories:</p>
             <ul className='list-disc pl-6'>
-              {product.Categorías.map((categoria) => (
-                <li key={categoria.id} className='text-gray-600'>
-                  {categoria.name}
+              {product.categories.map((category) => (
+                <li key={category.id} className='text-gray-600'>
+                  {category.name}
                 </li>
               ))}
             </ul>
-            {product.Imágenes.length > 0 && (
+            {product.images.length > 0 && (
               <img
-                src={product.Imágenes[0].url}
-                alt={`Imagen 1 de ${product.Nombre}`}
+                src={product.images[0].image}
+                alt={`Imagen 1 de ${product.name}`}
                 className='mt-4 rounded-md'
               />
             )}

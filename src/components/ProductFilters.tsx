@@ -64,7 +64,7 @@ const ProductFilters = ({ onFilter, categories }: FilterProps) => {
         onClick={handleApplyFilter}
         className='bg-orange-600 hover:bg-orange-800 text-white px-2 py-1 ml-2 rounded-md'
       >
-        Aplicar filtros
+        Apply
       </button>
     </div>
   );

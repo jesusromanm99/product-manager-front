@@ -123,7 +123,7 @@ function ProductListPage() {
   };
   return (
     <PageContainer>
-      <PageTitle title='Lista de Productos' />
+      <PageTitle title='Products list' />
       <ProductFilters
         onFilter={handleFilter}
         categories={products.map((product) => product.name)}

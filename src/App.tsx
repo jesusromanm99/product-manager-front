@@ -1,7 +1,11 @@
 import RootRoutes from "./components/RootRoutes";
 
 function App() {
-  return <RootRoutes />;
+  return (
+    <>
+      <RootRoutes />
+    </>
+  );
 }
 
 export default App;

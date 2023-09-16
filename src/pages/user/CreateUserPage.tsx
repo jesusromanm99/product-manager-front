@@ -31,11 +31,11 @@ const CreateUserPage = () => {
 
   return (
     <PageContainer maxW='max-w-lg'>
-      <PageTitle title='Crear una cuenta' />
+      <PageTitle title='Create an account' />
       <form onSubmit={handleSubmit} className='space-y-4'>
         <div>
           <label htmlFor='username' className='block mb-1'>
-            Usuario:
+            Username:
           </label>
           <input
             type='text'
@@ -43,13 +43,13 @@ const CreateUserPage = () => {
             name='username'
             value={formData.username}
             onChange={handleChange}
-            className='w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500'
+            className='w-full px-3 py-2 border bg-gray-100'
             required
           />
         </div>
         <div>
           <label htmlFor='email' className='block mb-1'>
-            Correo:
+            Email:
           </label>
           <input
             type='email'
@@ -57,13 +57,13 @@ const CreateUserPage = () => {
             name='email'
             value={formData.email}
             onChange={handleChange}
-            className='w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500'
+            className='w-full px-3 py-2 border bg-gray-100'
             required
           />
         </div>
         <div>
           <label htmlFor='password' className='block mb-1'>
-            Contraseña:
+            Password:
           </label>
           <input
             type='password'
@@ -71,13 +71,13 @@ const CreateUserPage = () => {
             name='password'
             value={formData.password}
             onChange={handleChange}
-            className='w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500'
+            className='w-full px-3 py-2 border bg-gray-100'
             required
           />
         </div>
         <div>
           <label htmlFor='passwordConfirmation' className='block mb-1'>
-            Confirmar Contraseña:
+            Confirm your Password:
           </label>
           <input
             type='password'
@@ -85,7 +85,7 @@ const CreateUserPage = () => {
             name='passwordConfirmation'
             value={formData.passwordConfirmation}
             onChange={handleChange}
-            className='w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500'
+            className='w-full px-3 py-2 border bg-gray-100'
             required
           />
         </div>
@@ -94,7 +94,7 @@ const CreateUserPage = () => {
             type='submit'
             className='w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600'
           >
-            Registrarse
+            Sign up
           </button>
         </div>
       </form>

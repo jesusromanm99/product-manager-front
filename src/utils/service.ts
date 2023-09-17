@@ -1,16 +1,14 @@
+import axios from "axios";
 import { RLogin } from "./interface";
-
-const BASE_URL = "http://127.0.0.1:8000";
+//import axiosClient from "./axiosClient";
+import { BASE_URL } from "./constants";
 
 export async function login({ username, password }: { username: string; password: string }) {
-  const data_ = JSON.stringify({ username, password });
-  const res = await fetch(`${BASE_URL}/api/token/`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-    body: data_,
-  });
-  if (res.ok) {
-    return res.json() as Promise<RLogin>;
+  //const data_ = JSON.stringify({ username, password });
+  try {
+    const { data } = await axios.post(`${BASE_URL}api/token/`, { username, password });
+    return data as RLogin;
+  } catch {
+    throw new Error("No se pudo");
   }
-  throw new Error("No se pudo");
 }

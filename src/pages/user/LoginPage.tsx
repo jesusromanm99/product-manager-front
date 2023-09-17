@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { login } from "../../utils/service";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -8,12 +9,13 @@ function LoginPage() {
   const navigate = useNavigate();
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
-    navigate("/users", { replace: true });
     try {
       const result = await login({ username, password });
-      console.log(result);
+      localStorage.setItem("session", JSON.stringify(result));
+      navigate("/users", { replace: true });
     } catch (error) {
       console.log(error);
+      toast.error("Usuario o contraseña incorrecta");
     }
   };
   return (

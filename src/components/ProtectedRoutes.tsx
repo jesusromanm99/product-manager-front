@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import ListUserPage from "../pages/user/ListUserPage";
 import ProductListPage from "../pages/product/ProductListPage";
@@ -6,6 +6,11 @@ import EditProductPage from "../pages/product/EditProductPage";
 import NavBar from "./NavBar";
 
 function ProtectedRoutes() {
+  useEffect(() => {
+    const session = localStorage.getItem("session");
+
+    console.log("session----", session);
+  }, []);
   return (
     <NavBar>
       <Routes>

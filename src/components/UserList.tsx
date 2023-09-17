@@ -7,25 +7,35 @@ import { toast } from "react-toastify";
 
 const UserList: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [hasError, setHasError] = useState(false);
   const getUser_ = async () => {
     const { data, error } = await getUsers();
     if (data) {
       setUsers(data);
     } else {
       toast.error(error);
+      setHasError(true);
     }
   };
   useEffect(() => {
     getUser_();
   }, []);
   const handleApprove = async (id: number) => {
-    const data = await approveUser({ id });
-    const users_ = users.map((user) => {
-      return user.id == id ? data : user;
-    });
-    setUsers(users_);
+    const { data, error } = await approveUser({ id });
+    if (data) {
+      const users_ = users.map((user) => {
+        return user.id == id ? data : user;
+      });
+      toast.success("User approved successfully.");
+      setUsers(users_);
+    } else {
+      toast.error(error);
+    }
   };
 
+  if (hasError) {
+    return <></>;
+  }
   return (
     <div>
       <PageTitle title='Lista de usuarios' />

@@ -41,9 +41,9 @@ export async function approveUser({ id }: { id: number }) {
   //const data_ = JSON.stringify({ username, password });
   try {
     const { data } = await axiosClient.patch(`${BASE_URL}users/${id}/approve/`);
-    return data as User;
+    return { data: data as User };
   } catch {
-    throw new Error("No se pudo");
+    return { error: "You do not have permission to approve user." };
   }
 }
 

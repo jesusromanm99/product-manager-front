@@ -24,7 +24,7 @@ function NavBar({ children }: { children: React.ReactNode }) {
           </li>
         </ul>
       </nav>
-      <div className='relative top-10'>{children}</div>
+      <div className='relative top-10 pb-7'>{children}</div>
     </div>
   );
 }

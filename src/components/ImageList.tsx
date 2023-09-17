@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { Image } from "../utils/interface";
 type props = {
-  images: string[];
+  images: Image[];
   onRemove: (img: string) => void;
   onAdd: (name: string) => void;
 };
@@ -18,6 +19,7 @@ function ImageList({ images, onRemove, onAdd }: props) {
             placeholder='Add categories'
           />
           <button
+            type='button'
             onClick={() => onAdd(newImage)}
             className='bg-green-800 px-3 py-1 text-white font-bold rounded-md text-sm'
           >
@@ -31,9 +33,10 @@ function ImageList({ images, onRemove, onAdd }: props) {
         {images.length !== 0 ? (
           images.map((img, index) => (
             <li key={index} className='grid grid-cols-3 gap-4 mr-3 my-2  items-center '>
-              <span className='text-gray-800 text-lg col-span-2'> {img}</span>
+              <span className='text-gray-800 text-lg col-span-2'> {img.image}</span>
               <button
-                onClick={() => onRemove(img)}
+                type='button'
+                onClick={() => onRemove(img.image)}
                 className='bg-red-800 px-2 py-1  text-white text-sm font-bold rounded-md'
               >
                 Remove

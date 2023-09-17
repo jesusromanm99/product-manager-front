@@ -13,7 +13,7 @@ export interface User {
 }
 
 export interface Category {
-  id: number;
+  id?: number;
   name: string;
 }
 
@@ -25,6 +25,7 @@ export interface Image {
 }
 
 export interface Product {
+  id: number;
   name: string;
   status: string;
   categories: Category[];
@@ -35,4 +36,10 @@ export interface FiltersProduct {
   name: string;
   status: string;
   category: string;
+}
+
+export interface GetProductsParams {
+  name?: string;
+  status?: string;
+  category?: string;
 }

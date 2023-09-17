@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { Category } from "../utils/interface";
 type props = {
-  categories: string[];
+  categories: Category[];
   onRemove: (category: string) => void;
   onAdd: (name: string) => void;
 };
@@ -18,6 +19,7 @@ function CategoriesList({ categories, onRemove, onAdd }: props) {
             placeholder='Add categories'
           />
           <button
+            type='button'
             onClick={() => onAdd(newCategory)}
             className='bg-green-800 px-3 py-1 text-white font-bold rounded-md text-sm'
           >
@@ -31,9 +33,10 @@ function CategoriesList({ categories, onRemove, onAdd }: props) {
         {categories.length !== 0 ? (
           categories.map((category, index) => (
             <li key={index} className='grid grid-cols-3 gap-4 mr-3 my-2 items-center '>
-              <span className='text-gray-800 text-lg col-span-2'> {category}</span>
+              <span className='text-gray-800 text-lg col-span-2'> {category.name}</span>
               <button
-                onClick={() => onRemove(category)}
+                type='button'
+                onClick={() => onRemove(category.name)}
                 className='bg-red-800 px-2 py-1  text-white text-sm font-bold rounded-md'
               >
                 Remove

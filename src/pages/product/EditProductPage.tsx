@@ -1,41 +1,34 @@
-//import { useParams } from "react-router-dom";
-import React from "react";
+import { useParams } from "react-router-dom";
+import React, { useEffect } from "react";
 import PageContainer from "../../components/PageContainer";
 import PageTitle from "../../components/PageTitle";
 import { useState } from "react";
-import { Product } from "../../utils/interface";
+import { Category, Image, Product } from "../../utils/interface";
 import CategoriesList from "../../components/CategoriesList";
 import ImageList from "../../components/ImageList";
-const product = {
-  id: 29,
-  categories: [
-    {
-      id: 10,
-      name: "Fruit",
-    },
-    {
-      id: 11,
-      name: "Red",
-    },
-  ],
-  images: [
-    {
-      image: "https://example.com/image1.jpg",
-    },
-    {
-      image: "https://example.com/image2.jpg",
-    },
-  ],
-  name: "Cherry",
-  status: "AC",
-};
+import { getProductById, updateProduct } from "../../utils/service";
+import { toast } from "react-toastify";
+
 function EditProductPage() {
-  //const { id } = useParams();
-  const [editedProduct, setEditedProduct] = useState<Product>(product);
-  const [categories, setCategories] = useState(
-    editedProduct.categories.map((category) => category.name)
-  );
-  const [images, setImages] = useState(editedProduct.images.map((image) => image.image));
+  const { id } = useParams();
+  const [editedProduct, setEditedProduct] = useState<Product>({} as Product);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [images, setImages] = useState<Image[]>([]);
+
+  const getProductDetail = async () => {
+    const { data, error } = await getProductById({ id });
+    if (data) {
+      setEditedProduct(data);
+      setCategories(data.categories);
+      setImages(data.images);
+    } else {
+      toast.error(error);
+    }
+  };
+  useEffect(() => {
+    getProductDetail();
+  }, []);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setEditedProduct({
@@ -44,25 +37,35 @@ function EditProductPage() {
     });
   };
   const handleAddCategory = (name: string) => {
-    setCategories([...categories, name]);
+    setCategories([...categories, { name }]);
   };
   const handleRemoveCategory = (name: string) => {
-    const categoriesFiltered = categories.filter((category) => category !== name);
+    const categoriesFiltered = categories.filter((category) => category.name !== name);
     setCategories(categoriesFiltered);
   };
-  const handleAddImage = (name: string) => {
-    setImages([...images, name]);
+  const handleAddImage = (image: string) => {
+    setImages([...images, { image }]);
   };
   const handleRemoveImage = (name: string) => {
-    const imagesFiltered = images.filter((img) => img !== name);
+    console.log("img", name, images);
+    const imagesFiltered = images.filter((img) => img.image !== name);
     setImages(imagesFiltered);
   };
-  const handleOnSubmit = (event: React.FormEvent) => {
+  const handleOnSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    console.log("heree");
+    const { data, error } = await updateProduct({
+      ...editedProduct,
+      images,
+      categories,
+    });
+    if (data) {
+      toast.success("Product edited successfully!!");
+    } else {
+      toast.error(error);
+    }
   };
-  const handleSave = () => {
-    console.log("save");
-  };
+
   return (
     <PageContainer>
       <PageTitle title='Edit product' />
@@ -75,7 +78,7 @@ function EditProductPage() {
             type='text'
             id='name'
             name='name'
-            value={editedProduct.name}
+            value={editedProduct.name || ""}
             onChange={handleInputChange}
             className='px-3 py-2 border bg-gray-200 max-w-md'
           />
@@ -88,7 +91,7 @@ function EditProductPage() {
             type='text'
             id='status'
             name='status'
-            value={editedProduct.status}
+            value={editedProduct.status || ""}
             onChange={handleInputChange}
             className='px-3 py-2 border bg-gray-200 max-w-md'
           />
@@ -97,17 +100,17 @@ function EditProductPage() {
           <CategoriesList
             categories={categories}
             onAdd={handleAddCategory}
-            onRemove={handleRemoveImage}
+            onRemove={handleRemoveCategory}
           />
 
-          <ImageList images={images} onAdd={handleAddImage} onRemove={handleRemoveCategory} />
+          <ImageList images={images} onAdd={handleAddImage} onRemove={handleRemoveImage} />
         </div>
         {/* Additional fields for Categorías and Imágenes */}
 
         <div className='grid grid-cols-2 mt-12'>
           <button
-            onClick={handleSave}
-            className='col-start-2 bg-orange-500 rounded-md text-white font-bold px-4 py-2 rounded-sm '
+            type='submit'
+            className='col-start-2 bg-orange-500 rounded-md text-white font-bold px-4 py-2 '
           >
             Save
           </button>

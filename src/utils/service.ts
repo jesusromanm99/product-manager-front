@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { RError, RLogin, User } from "./interface";
+import { GetProductsParams, Product, RError, RLogin, User } from "./interface";
 import axiosClient from "./axiosClient";
 import { BASE_URL } from "./constants";
 
@@ -24,6 +24,19 @@ export async function getUsers() {
   }
 }
 
+export async function getProducts(params: GetProductsParams) {
+  //const data_ = JSON.stringify({ username, password });
+  try {
+    console.log({ params });
+
+    const { data } = await axiosClient.get(`${BASE_URL}products/`, { params });
+
+    return { data: data["results"] as Product[] };
+  } catch (error) {
+    return { error: "You do not have permission to see the list of products." };
+  }
+}
+
 export async function approveUser({ id }: { id: number }) {
   //const data_ = JSON.stringify({ username, password });
   try {
@@ -31,6 +44,34 @@ export async function approveUser({ id }: { id: number }) {
     return data as User;
   } catch {
     throw new Error("No se pudo");
+  }
+}
+
+export async function deleteProduct({ id }: { id: number }) {
+  //const data_ = JSON.stringify({ username, password });
+  try {
+    await axiosClient.delete(`${BASE_URL}products/${id}`);
+    return {};
+  } catch {
+    return { error: "You do not have permission to delete product." };
+  }
+}
+
+export async function updateProduct(product: Product) {
+  try {
+    const { data } = await axiosClient.patch(`${BASE_URL}products/${product.id}/`, product);
+    return { data: data as Product };
+  } catch {
+    return { error: "You do not have permission to edit product." };
+  }
+}
+export async function getProductById({ id }: { id?: string }) {
+  //const data_ = JSON.stringify({ username, password });
+  try {
+    const { data } = await axiosClient.get(`${BASE_URL}products/${id}`);
+    return { data: data as Product };
+  } catch {
+    return { error: "You do not have permission to edit product." };
   }
 }
 

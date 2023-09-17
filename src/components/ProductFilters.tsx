@@ -4,10 +4,10 @@ import { FiltersProduct } from "../utils/interface";
 
 interface FilterProps {
   onFilter: (filters: FiltersProduct) => void;
-  categories: string[];
+  categories: Set<string>;
 }
 
-const ProductFilters = ({ onFilter, categories }: FilterProps) => {
+const ProductFilters = ({ onFilter }: FilterProps) => {
   const initialFilters: FiltersProduct = {
     name: "",
     status: "",
@@ -33,33 +33,25 @@ const ProductFilters = ({ onFilter, categories }: FilterProps) => {
     <div className='mb-5'>
       <input
         type='text'
-        name='nombre'
+        name='name'
         placeholder='Filter by name'
         onChange={handleFilterChange}
         className='border rounded-md px-2 py-1'
       />
       <input
         type='text'
-        name='estado'
+        name='status'
         placeholder='Filter by status'
         onChange={handleFilterChange}
         className='border rounded-md px-2 py-1 ml-2'
       />
-      <select
-        name='categorias'
+      <input
+        type='text'
+        name='category'
+        placeholder='Filter by category'
         onChange={handleFilterChange}
-        defaultValue={""}
-        className='border bg-white rounded-md px-2 py-1 ml-2'
-      >
-        <option value={""} disabled>
-          Filter by category
-        </option>
-        {categories.map((category, index) => (
-          <option key={index} value={category}>
-            {category}
-          </option>
-        ))}
-      </select>
+        className='border rounded-md px-2 py-1 ml-2'
+      />
       <button
         onClick={handleApplyFilter}
         className='bg-orange-600 hover:bg-orange-800 text-white px-2 py-1 ml-2 rounded-md'

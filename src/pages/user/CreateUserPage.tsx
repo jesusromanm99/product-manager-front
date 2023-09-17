@@ -2,12 +2,14 @@
 import React, { useState } from "react";
 import PageContainer from "../../components/PageContainer";
 import PageTitle from "../../components/PageTitle";
+import { createUser } from "../../utils/service";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 interface FormData {
   username: string;
   email: string;
   password: string;
-  passwordConfirmation: string;
 }
 
 const CreateUserPage = () => {
@@ -15,18 +17,23 @@ const CreateUserPage = () => {
     username: "",
     email: "",
     password: "",
-    passwordConfirmation: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const navigate = useNavigate();
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission, e.g., send data to a server
-    console.log(formData);
+    const { data, error } = await createUser(formData);
+    if (data) {
+      toast.success("User created successfully");
+      navigate("/login", { replace: true });
+    } else {
+      toast.error(error);
+    }
   };
 
   return (
@@ -75,20 +82,7 @@ const CreateUserPage = () => {
             required
           />
         </div>
-        <div>
-          <label htmlFor='passwordConfirmation' className='block mb-1'>
-            Confirm your Password:
-          </label>
-          <input
-            type='password'
-            id='passwordConfirmation'
-            name='passwordConfirmation'
-            value={formData.passwordConfirmation}
-            onChange={handleChange}
-            className='w-full px-3 py-2 border bg-gray-100'
-            required
-          />
-        </div>
+
         <div>
           <button
             type='submit'

@@ -1,8 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 function NavBar({ children }: { children: React.ReactNode }) {
+  const navigate = useNavigate();
   const hanldeLogOut = () => {
-    console.log("logout");
+    localStorage.clear();
+    navigate("/login", { replace: true });
   };
   return (
     <div className='h-screen '>

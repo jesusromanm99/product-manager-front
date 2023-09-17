@@ -9,13 +9,13 @@ function LoginPage() {
   const navigate = useNavigate();
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
-    try {
-      const result = await login({ username, password });
-      localStorage.setItem("session", JSON.stringify(result));
+
+    const { data, error } = await login({ username, password });
+    if (data) {
+      localStorage.setItem("session", JSON.stringify(data));
       navigate("/users", { replace: true });
-    } catch (error) {
-      console.log(error);
-      toast.error("Usuario o contraseña incorrecta");
+    } else {
+      toast.error(error.detail);
     }
   };
   return (

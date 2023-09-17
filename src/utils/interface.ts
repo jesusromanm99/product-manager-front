@@ -4,11 +4,12 @@ export interface RLogin {
 }
 
 export interface User {
+  id: number;
   username: string;
   password: string;
   email: string;
-  isStaff: boolean;
-  isSuperUser: boolean;
+  is_staff: boolean;
+  is_superuser: boolean;
 }
 
 export interface Category {
@@ -16,6 +17,9 @@ export interface Category {
   name: string;
 }
 
+export interface RError {
+  detail: string;
+}
 export interface Image {
   image: string;
 }

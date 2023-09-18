@@ -6,7 +6,11 @@ interface Props {
 function ProductStatus({ status }: Props) {
   return (
     <div
-      className={`rounded-lg text-white px-2  ${status == "AC" ? "bg-green-500" : "bg-red-500"}`}
+      className={`inline-block rounded-lg border  px-2 font-semibold  ${
+        status == "AC"
+          ? "border-green-200 bg-green-100 text-green-700"
+          : "border-red-200 bg-red-100 text-red-700"
+      }`}
     >
       {status == "AC" ? "Active" : "Inactive"}
     </div>

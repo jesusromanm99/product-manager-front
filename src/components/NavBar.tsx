@@ -1,5 +1,15 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBox, faRightFromBracket, faUser } from "@fortawesome/free-solid-svg-icons";
+const LINKS = [
+  {
+    label: "Users",
+    href: "/users",
+    icon: faUser,
+  },
+  { label: "Products", href: "/products", icon: faBox },
+];
 function NavBar({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
   const hanldeLogOut = () => {
@@ -10,16 +20,21 @@ function NavBar({ children }: { children: React.ReactNode }) {
     <div className='h-screen '>
       <nav className='fixed z-10 top-0 left-0 bg-orange-500 w-screen  '>
         <ul className=' flex justify-end gap-3 max-w-5xl py-5  mx-auto'>
-          <li className='text-white font-semibold hover:underline hover:cursor-pointer'>
-            <Link to={"/users"}>Users</Link>
-          </li>
-          <li className='text-white font-semibold hover:underline hover:cursor-pointer'>
-            <Link to={"/products"}>Products</Link>
-          </li>
+          {LINKS.map((link, index) => (
+            <li
+              key={index}
+              className='px-2 py-2 text-white font-semibold hover:bg-white hover:rounded-md hover:text-orange-500 hover:cursor-pointer '
+            >
+              <Link to={link.href}>
+                <FontAwesomeIcon icon={link.icon} className='mr-1' /> {link.label}
+              </Link>
+            </li>
+          ))}
           <li
             onClick={hanldeLogOut}
-            className='text-white font-semibold hover:underline hover:cursor-pointer'
+            className='px-2 py-2 text-white font-semibold hover:bg-white hover:rounded-md hover:text-orange-500 hover:cursor-pointer '
           >
+            <FontAwesomeIcon icon={faRightFromBracket} className='mr-1' />
             Log out
           </li>
         </ul>

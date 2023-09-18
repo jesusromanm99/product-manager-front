@@ -9,6 +9,7 @@ import ImageList from "../../components/ImageList";
 import { getProductById, updateProduct } from "../../utils/service";
 import { toast } from "react-toastify";
 import { STATUS_OPTIONS } from "../../utils/constants";
+import AddListItems from "../../components/AddListItems";
 
 function EditProductPage() {
   const { id } = useParams();
@@ -85,6 +86,9 @@ function EditProductPage() {
           />
         </div>
         <div className='flex flex-col gap-2 '>
+          <label htmlFor='name' className='text-gray-700 font-semibold'>
+            Status:
+          </label>
           <select
             name='status'
             defaultValue={editedProduct.status}
@@ -102,13 +106,22 @@ function EditProductPage() {
           </select>
         </div>
         <div className='grid grid-cols-2 gap-x-5'>
-          <CategoriesList
-            categories={categories}
+          <AddListItems
+            items={categories.map((category) => category.name)}
+            placeholder='Add category'
+            label='Categories'
+            emptyMessage='No categories added'
             onAdd={handleAddCategory}
             onRemove={handleRemoveCategory}
           />
-
-          <ImageList images={images} onAdd={handleAddImage} onRemove={handleRemoveImage} />
+          <AddListItems
+            items={images.map((img) => img.image)}
+            placeholder='Add image'
+            label='Images'
+            emptyMessage='No images added'
+            onAdd={handleAddImage}
+            onRemove={handleRemoveImage}
+          />
         </div>
         {/* Additional fields for Categorías and Imágenes */}
 

@@ -38,7 +38,7 @@ const UserList: React.FC = () => {
   }
   return (
     <div>
-      <PageTitle title='Lista de usuarios' />
+      <PageTitle title='Users list' />
       <table className='border-collapse w-full'>
         <thead>
           <tr>
@@ -52,10 +52,10 @@ const UserList: React.FC = () => {
         <tbody>
           {users.map((user, index) => (
             <tr key={index}>
-              <td className='border px-4 py-2'>{user.username}</td>
-              <td className='border px-4 py-2'>{user.email}</td>
-              <td className='border px-4 py-2'>{user.is_staff ? "Yes" : "No"}</td>
-              <td className='border px-4 py-2'>{user.is_superuser ? "Yes" : "No"}</td>
+              <td className='border px-4 py-2 text-center'>{user.username}</td>
+              <td className='border px-4 py-2 text-center'>{user.email}</td>
+              <td className='border px-4 py-2 text-center'>{user.is_staff ? "Yes" : "No"}</td>
+              <td className='border px-4 py-2 text-center'>{user.is_superuser ? "Yes" : "No"}</td>
               <td className='px-4 py-2 border-0'>
                 {!user.is_staff && (
                   <button

@@ -8,6 +8,7 @@ import CategoriesList from "../../components/CategoriesList";
 import ImageList from "../../components/ImageList";
 import { getProductById, updateProduct } from "../../utils/service";
 import { toast } from "react-toastify";
+import { STATUS_OPTIONS } from "../../utils/constants";
 
 function EditProductPage() {
   const { id } = useParams();
@@ -29,7 +30,7 @@ function EditProductPage() {
     getProductDetail();
   }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setEditedProduct({
       ...editedProduct,
@@ -69,7 +70,7 @@ function EditProductPage() {
   return (
     <PageContainer>
       <PageTitle title='Edit product' />
-      <form className='' onSubmit={handleOnSubmit}>
+      <form className='space-y-3' onSubmit={handleOnSubmit}>
         <div className='flex flex-col gap-2'>
           <label htmlFor='name' className='text-gray-700 font-semibold'>
             Name:
@@ -80,21 +81,25 @@ function EditProductPage() {
             name='name'
             value={editedProduct.name || ""}
             onChange={handleInputChange}
-            className='px-3 py-2 border bg-gray-200 max-w-md'
+            className='px-3 py-2 border bg-gray-200 max-w-md rounded-md'
           />
         </div>
-        <div className='flex flex-col gap-2'>
-          <label htmlFor='status' className='text-gray-700 font-semibold'>
-            Status:
-          </label>
-          <input
-            type='text'
-            id='status'
+        <div className='flex flex-col gap-2 '>
+          <select
             name='status'
-            value={editedProduct.status || ""}
+            defaultValue={editedProduct.status}
             onChange={handleInputChange}
-            className='px-3 py-2 border bg-gray-200 max-w-md'
-          />
+            className='px-3 py-2 border bg-gray-200 max-w-md rounded-md'
+          >
+            <option value={""} disabled>
+              Select an option
+            </option>
+            {STATUS_OPTIONS.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
         </div>
         <div className='grid grid-cols-2 gap-x-5'>
           <CategoriesList

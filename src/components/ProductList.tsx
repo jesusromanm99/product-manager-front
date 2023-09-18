@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Product } from "../utils/interface";
+import ProductStatus from "./ProductStatus";
 
 interface ProductListProps {
   products: Product[];
@@ -13,14 +14,18 @@ const ProductList = ({ products, onDelete }: ProductListProps) => {
         {products.map((product, index) => (
           <li key={index} className='border rounded-lg p-4 mb-4 '>
             <div className='flex justify-between items-center mb-2'>
-              <h3 className='text-lg font-semibold'>{product.name}</h3>
+              <div className='flex gap-2'>
+                {" "}
+                <h3 className='text-lg font-semibold'>{product.name} </h3>
+                <ProductStatus status={product.status} />
+              </div>
               {product.id && (
                 <div>
-                  <button className='text-blue-900 border border-blue-900 rounded px-1  hover:bg-blue-900 hover:text-white mr-2'>
+                  <button className='px-3 py-1 text-blue-900 border border-blue-900 rounded  hover:bg-blue-900 hover:text-white mr-2'>
                     <Link to={"/products/" + product.id}>Edit</Link>
                   </button>
                   <button
-                    className='border border-red-700 rounded px-1  text-red-700 hover:bg-red-700 hover:text-white'
+                    className='px-3 py-1 border border-red-700 rounded  text-red-700 hover:bg-red-700 hover:text-white'
                     onClick={() => onDelete(product)}
                   >
                     Delete
@@ -28,9 +33,7 @@ const ProductList = ({ products, onDelete }: ProductListProps) => {
                 </div>
               )}
             </div>
-            <p className='text-gray-600'>
-              Status: {product.status == "AC" ? "Active" : "Inactive"}
-            </p>
+
             {product.categories && (
               <>
                 <p className='text-gray-600'>Categories:</p>
@@ -49,7 +52,7 @@ const ProductList = ({ products, onDelete }: ProductListProps) => {
               <img
                 src={product.images[0].image}
                 alt={`Imagen 1 de ${product.name}`}
-                className='mt-4 rounded-md'
+                className='mt-4 rounded-md object-contain h-36 w-28 border'
               />
             )}
           </li>

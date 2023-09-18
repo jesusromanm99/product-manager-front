@@ -15,7 +15,7 @@ function ImageList({ images, onRemove, onAdd }: props) {
           <input
             value={newImage}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewImage(e.target.value)}
-            className='px-3 py-2 border bg-gray-200 max-w-md '
+            className='px-3 py-2 border bg-gray-200 max-w-md rounded-md'
             placeholder='Add categories'
           />
           <button
@@ -33,7 +33,7 @@ function ImageList({ images, onRemove, onAdd }: props) {
         {images.length !== 0 ? (
           images.map((img, index) => (
             <li key={index} className='grid grid-cols-3 gap-4 mr-3 my-2  items-center '>
-              <span className='text-gray-800 text-lg col-span-2'> {img.image}</span>
+              <span className='text-gray-800 text-lg col-span-2 overflow-x-clip'> {img.image}</span>
               <button
                 type='button'
                 onClick={() => onRemove(img.image)}

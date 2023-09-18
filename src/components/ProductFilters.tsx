@@ -1,6 +1,7 @@
 // ProductFilter.tsx
 import React, { useState } from "react";
 import { FiltersProduct } from "../utils/interface";
+import { STATUS_OPTIONS } from "../utils/constants";
 
 interface FilterProps {
   onFilter: (filters: FiltersProduct) => void;
@@ -38,13 +39,23 @@ const ProductFilters = ({ onFilter }: FilterProps) => {
         onChange={handleFilterChange}
         className='border rounded-md px-2 py-1'
       />
-      <input
-        type='text'
+      <select
         name='status'
-        placeholder='Filter by status'
+        defaultValue={"select"}
         onChange={handleFilterChange}
         className='border rounded-md px-2 py-1 ml-2'
-      />
+      >
+        <option value={"select"} disabled>
+          Select an option
+        </option>
+        {STATUS_OPTIONS.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+        <option value={""}>All</option>
+      </select>
+
       <input
         type='text'
         name='category'

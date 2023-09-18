@@ -9,7 +9,7 @@ function NavBar({ children }: { children: React.ReactNode }) {
   return (
     <div className='h-screen '>
       <nav className='fixed z-10 top-0 left-0 bg-orange-500 w-screen  '>
-        <ul className=' flex justify-end gap-3 max-w-5xl py-2  mx-auto'>
+        <ul className=' flex justify-end gap-3 max-w-5xl py-5  mx-auto'>
           <li className='text-white font-semibold hover:underline hover:cursor-pointer'>
             <Link to={"/users"}>Users</Link>
           </li>

@@ -15,7 +15,7 @@ function CategoriesList({ categories, onRemove, onAdd }: props) {
           <input
             value={newCategory}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewCategory(e.target.value)}
-            className='px-3 py-2 border bg-gray-200 max-w-md '
+            className='px-3 py-2 border bg-gray-200 max-w-md rounded-md '
             placeholder='Add categories'
           />
           <button
@@ -33,7 +33,10 @@ function CategoriesList({ categories, onRemove, onAdd }: props) {
         {categories.length !== 0 ? (
           categories.map((category, index) => (
             <li key={index} className='grid grid-cols-3 gap-4 mr-3 my-2 items-center '>
-              <span className='text-gray-800 text-lg col-span-2'> {category.name}</span>
+              <span className='text-gray-800 text-lg col-span-2 overflow-x-clip'>
+                {" "}
+                {category.name}
+              </span>
               <button
                 type='button'
                 onClick={() => onRemove(category.name)}

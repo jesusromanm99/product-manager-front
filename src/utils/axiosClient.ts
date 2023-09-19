@@ -34,6 +34,7 @@ axiosClient.interceptors.response.use(
       // Token has expired, attempt to renew it
       window.location.href = "/login";
     }
+    return Promise.reject(error);
   }
 );
 

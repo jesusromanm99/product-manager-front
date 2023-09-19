@@ -25,7 +25,10 @@ function NavBar({ children }: { children: React.ReactNode }) {
               key={index}
               className='px-2 py-2 text-white font-semibold hover:bg-white hover:rounded-md hover:text-orange-500 hover:cursor-pointer '
             >
-              <Link to={link.href}>
+              <Link
+                to={link.href}
+                className='px-2 py-2 text-white font-semibold hover:bg-white hover:rounded-md hover:text-orange-500 hover:cursor-pointer '
+              >
                 <FontAwesomeIcon icon={link.icon} className='mr-1' /> {link.label}
               </Link>
             </li>

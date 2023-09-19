@@ -85,7 +85,10 @@ export async function createUser(body: CreateUserProps) {
   try {
     const { data } = await axiosClient.post(`${BASE_URL}users/`, body);
     return { data: data as User };
-  } catch {
-    return { error: "Error on create user, try later" };
+  } catch (error) {
+    const err = error as AxiosError;
+    const r = Object.values(err?.response?.data || {});
+    if (r.length === 0) return { error: "Error on create user, try later" };
+    else return { error: r[0][0] };
   }
 }

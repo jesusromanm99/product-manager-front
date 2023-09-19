@@ -24,8 +24,17 @@ const CreateUserPage = () => {
     setFormData({ ...formData, [name]: value });
   };
   const navigate = useNavigate();
+  const validateData = () => {
+    const expression: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    console.log(expression.test(formData.email));
+    return expression.test(formData.email); // true
+  };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateData()) {
+      toast.warning("Enter a valid email.");
+      return;
+    }
     // Handle form submission, e.g., send data to a server
     const { data, error } = await createUser(formData);
     if (data) {

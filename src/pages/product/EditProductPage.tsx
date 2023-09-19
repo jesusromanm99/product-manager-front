@@ -4,8 +4,6 @@ import PageContainer from "../../components/PageContainer";
 import PageTitle from "../../components/PageTitle";
 import { useState } from "react";
 import { Category, Image, Product } from "../../utils/interface";
-import CategoriesList from "../../components/CategoriesList";
-import ImageList from "../../components/ImageList";
 import { getProductById, updateProduct } from "../../utils/service";
 import { toast } from "react-toastify";
 import { STATUS_OPTIONS } from "../../utils/constants";
@@ -39,14 +37,21 @@ function EditProductPage() {
     });
   };
   const handleAddCategory = (name: string) => {
-    setCategories([...categories, { name }]);
+    if (categories.find((category) => category.name.toLowerCase() == name.toLocaleLowerCase()))
+      toast.warning("Category already added.");
+    else setCategories([...categories, { name }]);
   };
   const handleRemoveCategory = (name: string) => {
     const categoriesFiltered = categories.filter((category) => category.name !== name);
     setCategories(categoriesFiltered);
   };
   const handleAddImage = (image: string) => {
-    setImages([...images, { image }]);
+    try {
+      new URL(image);
+      setImages([...images, { image }]);
+    } catch (err) {
+      toast.warning("Enter a valid url.");
+    }
   };
   const handleRemoveImage = (name: string) => {
     console.log("img", name, images);

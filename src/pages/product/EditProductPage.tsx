@@ -76,6 +76,7 @@ function EditProductPage() {
   return (
     <PageContainer>
       <PageTitle title='Edit product' />
+
       <form className='flex flex-col gap-7' onSubmit={handleOnSubmit}>
         <div className='flex flex-col gap-2'>
           <label htmlFor='name' className='text-gray-700 font-semibold'>

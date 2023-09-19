@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { GetProductsParams, Product, RError, RLogin, User } from "./interface";
+import { GetProductsParams, Product, RError, RLogin, RUser, User } from "./interface";
 import axiosClient from "./axiosClient";
 import { BASE_URL } from "./constants";
 
@@ -14,11 +14,11 @@ export async function login({ username, password }: { username: string; password
   }
 }
 
-export async function getUsers() {
+export async function getUsers({ page }: { page: number }) {
   //const data_ = JSON.stringify({ username, password });
   try {
-    const { data } = await axiosClient.get(`${BASE_URL}users`);
-    return { data: data["results"] as User[] };
+    const { data } = await axiosClient.get<RUser>(`${BASE_URL}users`, { params: { page } });
+    return { data };
   } catch (error) {
     return { error: "You do not have permission to see the list of users." };
   }

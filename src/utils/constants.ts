@@ -3,3 +3,5 @@ export const STATUS_OPTIONS: { value: string; label: string }[] = [
   { value: "AC", label: "Active" },
   { value: "IN", label: "Inactive" },
 ];
+
+export const TOTAL_ITEMS_PER_PAGE = 10;

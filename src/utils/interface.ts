@@ -11,6 +11,12 @@ export interface User {
   is_staff: boolean;
   is_superuser: boolean;
 }
+export interface RUser {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: User[];
+}
 
 export interface Category {
   id?: number;

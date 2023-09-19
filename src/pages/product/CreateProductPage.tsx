@@ -1,40 +1,25 @@
-import { useParams } from "react-router-dom";
-import React, { useEffect } from "react";
+import React from "react";
 import PageContainer from "../../components/PageContainer";
 import PageTitle from "../../components/PageTitle";
 import { useState } from "react";
 import { Category, Image, Product } from "../../utils/interface";
-import { getProductById, updateProduct } from "../../utils/service";
+import { createProduct } from "../../utils/service";
 import { toast } from "react-toastify";
 import { STATUS_OPTIONS } from "../../utils/constants";
 import AddListItems from "../../components/AddListItems";
 
-function EditProductPage() {
-  const { id } = useParams();
-  const [editedProduct, setEditedProduct] = useState<Product>({} as Product);
+function CreateProductPage() {
+  const [form, setForm] = useState<Product>({} as Product);
   const [categories, setCategories] = useState<Category[]>([]);
   const [images, setImages] = useState<Image[]>([]);
 
-  const getProductDetail = async () => {
-    const { data, error } = await getProductById({ id });
-    if (data) {
-      setEditedProduct(data);
-      setCategories(data.categories);
-      setImages(data.images);
-    } else {
-      toast.error(error);
-    }
-  };
-  useEffect(() => {
-    getProductDetail();
-  }, []);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setEditedProduct({
-      ...editedProduct,
+    setForm({
+      ...form,
       [name]: value,
     });
+    console.log("name", { name, value });
   };
   const handleAddCategory = (name: string) => {
     if (categories.find((category) => category.name.toLowerCase() == name.toLocaleLowerCase()))
@@ -54,20 +39,18 @@ function EditProductPage() {
     }
   };
   const handleRemoveImage = (name: string) => {
-    console.log("img", name, images);
     const imagesFiltered = images.filter((img) => img.image !== name);
     setImages(imagesFiltered);
   };
   const handleOnSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    console.log("heree");
-    const { data, error } = await updateProduct({
-      ...editedProduct,
+    const { data, error } = await createProduct({
+      ...form,
       images,
       categories,
     });
     if (data) {
-      toast.success("Product edited successfully!!");
+      toast.success("Product created successfully!!");
     } else {
       toast.error(error);
     }
@@ -75,7 +58,7 @@ function EditProductPage() {
 
   return (
     <PageContainer>
-      <PageTitle title='Edit product' />
+      <PageTitle title='New product' />
 
       <form className='flex flex-col gap-7' onSubmit={handleOnSubmit}>
         <div className='flex flex-col gap-2'>
@@ -87,7 +70,7 @@ function EditProductPage() {
             type='text'
             id='name'
             name='name'
-            value={editedProduct.name || ""}
+            value={form.name || ""}
             onChange={handleInputChange}
             className='px-3 py-2 border bg-gray-200 max-w-md rounded-md'
           />
@@ -97,8 +80,9 @@ function EditProductPage() {
             Status:
           </label>
           <select
+            required
             name='status'
-            defaultValue={editedProduct.status}
+            defaultValue={""}
             onChange={handleInputChange}
             className='px-3 py-2 border bg-gray-200 max-w-md rounded-md'
           >
@@ -137,7 +121,7 @@ function EditProductPage() {
             type='submit'
             className='md:col-start-2 bg-orange-500 rounded-md text-white font-bold px-4 py-2 '
           >
-            Save
+            Create
           </button>
         </div>
       </form>
@@ -145,4 +129,4 @@ function EditProductPage() {
   );
 }
 
-export default EditProductPage;
+export default CreateProductPage;

@@ -55,6 +55,15 @@ export async function deleteProduct({ id }: { id: number }) {
   }
 }
 
+export async function createProduct(product: Product) {
+  try {
+    console.log(product);
+    const { data } = await axiosClient.post(`${BASE_URL}products/`, product);
+    return { data: data as Product };
+  } catch {
+    return { error: "You do not have permission to create product." };
+  }
+}
 export async function updateProduct(product: Product) {
   try {
     const { data } = await axiosClient.patch(`${BASE_URL}products/${product.id}/`, product);

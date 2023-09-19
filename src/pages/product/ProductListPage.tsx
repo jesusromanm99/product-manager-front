@@ -10,6 +10,8 @@ import { deleteProduct, getProducts } from "../../utils/service";
 import { toast } from "react-toastify";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Pagination from "../../components/Pagination";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
 function ProductListPage() {
   const [searchParams] = useSearchParams();
@@ -42,6 +44,9 @@ function ProductListPage() {
     const { error } = await deleteProduct({ id: deletedProduct.id });
     if (error) toast.error(error);
     else {
+      getProducts_({ page: 1 });
+      navigate(`/products?page=${1}`);
+      setPage(1);
       const filter = results.results.filter((product) => product.id !== deletedProduct.id);
       setResults({ ...results, results: filter });
       toast.success("Product deleted successfully");
@@ -62,7 +67,16 @@ function ProductListPage() {
   return (
     <PageContainer>
       <div className='flex flex-col md:flex-row justify-between flex-wrap  mb-4'>
-        <PageTitle title='Products list' />
+        <div>
+          <PageTitle title='Products list' />
+          <button
+            onClick={() => navigate("/products/create")}
+            className='ml-5 bg-orange-500 text-white rounded-md px-3 py-1  '
+          >
+            <FontAwesomeIcon icon={faAdd} className='mr-2' />
+            New Product
+          </button>
+        </div>
         <Pagination
           handlePageChange={handlePageChange}
           totalPages={results.count}

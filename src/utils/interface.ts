@@ -18,6 +18,13 @@ export interface RUser {
   results: User[];
 }
 
+export interface RProduct {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Product[];
+}
+
 export interface Category {
   id?: number;
   name: string;
@@ -48,4 +55,5 @@ export interface GetProductsParams {
   name?: string;
   status?: string;
   category?: string;
+  page: number;
 }

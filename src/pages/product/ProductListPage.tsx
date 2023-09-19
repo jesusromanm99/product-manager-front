@@ -5,31 +5,45 @@ import PageContainer from "../../components/PageContainer";
 import PageTitle from "../../components/PageTitle";
 import ProductFilters from "../../components/ProductFilters";
 import ProductList from "../../components/ProductList";
-import { FiltersProduct, GetProductsParams, Product } from "../../utils/interface";
+import { FiltersProduct, GetProductsParams, Product, RProduct } from "../../utils/interface";
 import { deleteProduct, getProducts } from "../../utils/service";
 import { toast } from "react-toastify";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import Pagination from "../../components/Pagination";
 
 function ProductListPage() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [results, setResults] = useState<RProduct>({} as RProduct);
+  const [page, setPage] = useState(Number(searchParams.get("page")) || 1);
+
+  useEffect(() => {
+    getProducts_({ page });
+  }, []);
+
   const getProducts_ = async (params: GetProductsParams) => {
     const { data, error } = await getProducts(params);
     if (data) {
-      console.log({ data });
-      setProducts(data);
+      setResults(data);
     } else {
       toast.error(error);
     }
   };
-  useEffect(() => {
-    getProducts_({});
-  }, []);
 
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= results.count) {
+      setPage(newPage);
+      getProducts_({ page: newPage });
+      navigate(`/products?page=${newPage}`);
+    }
+  };
   const handleDelete = async (deletedProduct: Product) => {
     // Implement deletion logic here, e.g., show a confirmation dialog
     const { error } = await deleteProduct({ id: deletedProduct.id });
     if (error) toast.error(error);
     else {
-      setProducts(products.filter((product) => product.id !== deletedProduct.id));
+      const filter = results.results.filter((product) => product.id !== deletedProduct.id);
+      setResults({ ...results, results: filter });
       toast.success("Product deleted successfully");
     }
   };
@@ -41,16 +55,27 @@ function ProductListPage() {
       ...(filters.category !== "" && { category: filters.category }),
       ...(filters.status !== "" && { status: filters.status }),
     };
-    await getProducts_(params);
+    setPage(1);
+    navigate(`/products?page=${1}`);
+    await getProducts_({ ...params, page: 1 });
   };
   return (
     <PageContainer>
-      <PageTitle title='Products list' />
+      <div className='flex flex-col md:flex-row justify-between flex-wrap  mb-4'>
+        <PageTitle title='Products list' />
+        <Pagination
+          handlePageChange={handlePageChange}
+          totalPages={results.count}
+          page={page}
+          hasNextPage={!!results.next}
+          hasPrevPage={!!results.previous}
+        />
+      </div>
       <ProductFilters
         onFilter={handleFilter}
-        categories={new Set(products.map((product) => product.name))}
+        categories={new Set(results?.results?.map((product) => product.name))}
       />
-      <ProductList products={products} onDelete={handleDelete} />
+      <ProductList products={results?.results || []} onDelete={handleDelete} />
     </PageContainer>
   );
 }

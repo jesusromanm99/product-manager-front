@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { GetProductsParams, Product, RError, RLogin, RUser, User } from "./interface";
+import { GetProductsParams, Product, RError, RLogin, RProduct, RUser, User } from "./interface";
 import axiosClient from "./axiosClient";
 import { BASE_URL } from "./constants";
 
@@ -27,11 +27,9 @@ export async function getUsers({ page }: { page: number }) {
 export async function getProducts(params: GetProductsParams) {
   //const data_ = JSON.stringify({ username, password });
   try {
-    console.log({ params });
+    const { data } = await axiosClient.get<RProduct>(`${BASE_URL}products/`, { params });
 
-    const { data } = await axiosClient.get(`${BASE_URL}products/`, { params });
-
-    return { data: data["results"] as Product[] };
+    return { data };
   } catch (error) {
     return { error: "You do not have permission to see the list of products." };
   }

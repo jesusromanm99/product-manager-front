@@ -76,7 +76,7 @@ function EditProductPage() {
   return (
     <PageContainer>
       <PageTitle title='Edit product' />
-      <form className='space-y-3' onSubmit={handleOnSubmit}>
+      <form className='flex flex-col gap-7' onSubmit={handleOnSubmit}>
         <div className='flex flex-col gap-2'>
           <label htmlFor='name' className='text-gray-700 font-semibold'>
             Name:
@@ -110,7 +110,7 @@ function EditProductPage() {
             ))}
           </select>
         </div>
-        <div className='grid grid-cols-2 gap-x-5'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-x-5'>
           <AddListItems
             items={categories.map((category) => category.name)}
             placeholder='Add category'
@@ -130,10 +130,10 @@ function EditProductPage() {
         </div>
         {/* Additional fields for Categorías and Imágenes */}
 
-        <div className='grid grid-cols-2 mt-12'>
+        <div className='grid grid-cols-1 md:grid-cols-2 mt-12'>
           <button
             type='submit'
-            className='col-start-2 bg-orange-500 rounded-md text-white font-bold px-4 py-2 '
+            className='md:col-start-2 bg-orange-500 rounded-md text-white font-bold px-4 py-2 '
           >
             Save
           </button>

@@ -31,7 +31,7 @@ const ProductFilters = ({ onFilter }: FilterProps) => {
   };
 
   return (
-    <div className='mb-5'>
+    <div className='mb-5 flex flex-col md:flex-row gap-2'>
       <input
         type='text'
         name='name'
@@ -43,7 +43,7 @@ const ProductFilters = ({ onFilter }: FilterProps) => {
         name='status'
         defaultValue={"select"}
         onChange={handleFilterChange}
-        className='border rounded-md px-2 py-1 ml-2'
+        className='border rounded-md px-2 py-1 '
       >
         <option value={"select"} disabled>
           Select an option
@@ -61,7 +61,7 @@ const ProductFilters = ({ onFilter }: FilterProps) => {
         name='category'
         placeholder='Filter by category'
         onChange={handleFilterChange}
-        className='border rounded-md px-2 py-1 ml-2'
+        className='border rounded-md px-2 py-1 '
       />
       <button
         onClick={handleApplyFilter}

@@ -15,18 +15,19 @@ const ProductList = ({ products, onDelete }: ProductListProps) => {
       <ul>
         {products.map((product, index) => (
           <li key={index} className='border rounded-lg p-4 mb-4 '>
-            <div className='flex justify-between items-center mb-2'>
-              <div className='flex gap-2 items-center'>
+            <div className='flex gap-2 justify-between items-center mb-2 flex-wrap'>
+              <div className='flex justify-evenly md:justify-start gap-2 items-center'>
                 <h3 className='text-xl font-semibold'>{product.name} </h3>
                 <ProductStatus status={product.status} />
               </div>
               {product.id && (
                 <div>
-                  <button className='px-3 py-1 text-blue-900 border border-blue-900 rounded  hover:bg-blue-900 hover:text-white mr-2'>
-                    <Link to={"/products/" + product.id}>
+                  <Link to={"/products/" + product.id}>
+                    <button className='px-3 py-1 text-blue-900 border border-blue-900 rounded  hover:bg-blue-900 hover:text-white mr-2'>
                       <FontAwesomeIcon icon={faEdit} /> Edit
-                    </Link>
-                  </button>
+                    </button>
+                  </Link>
+
                   <button
                     className='px-3 py-1 border border-red-700 rounded  text-red-700 hover:bg-red-700 hover:text-white'
                     onClick={() => onDelete(product)}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBox, faRightFromBracket, faUser } from "@fortawesome/free-solid-svg-icons";
 const LINKS = [
@@ -11,6 +11,9 @@ const LINKS = [
   { label: "Products", href: "/products", icon: faBox },
 ];
 function NavBar({ children }: { children: React.ReactNode }) {
+  const { pathname } = useLocation();
+  console.log({ pathname });
+
   const navigate = useNavigate();
   const hanldeLogOut = () => {
     localStorage.clear();
@@ -27,7 +30,9 @@ function NavBar({ children }: { children: React.ReactNode }) {
             >
               <Link
                 to={link.href}
-                className='px-2 py-2 text-white font-semibold hover:bg-white hover:rounded-md hover:text-orange-500 hover:cursor-pointer '
+                className={`px-2 py-2  font-semibold ${
+                  pathname == link.href ? "bg-white text-orange-500 rounded-md" : "text-white"
+                } hover:bg-white hover:rounded-md hover:text-orange-500 hover:cursor-pointer `}
               >
                 <FontAwesomeIcon icon={link.icon} className='mr-1' /> {link.label}
               </Link>

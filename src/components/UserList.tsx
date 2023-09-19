@@ -37,39 +37,41 @@ const UserList: React.FC = () => {
     return <></>;
   }
   return (
-    <div>
+    <div className=''>
       <PageTitle title='Users list' />
-      <table className='border-collapse w-full'>
-        <thead>
-          <tr>
-            <th className='border px-4 py-2'>User</th>
-            <th className='border px-4 py-2'>Email</th>
-            <th className='border px-4 py-2'>Staff</th>
-            <th className='border px-4 py-2'>Admin</th>
-            <th className=' px-4 py-2 border-0 '></th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user, index) => (
-            <tr key={index}>
-              <td className='border px-4 py-2 text-center'>{user.username}</td>
-              <td className='border px-4 py-2 text-center'>{user.email}</td>
-              <td className='border px-4 py-2 text-center'>{user.is_staff ? "Yes" : "No"}</td>
-              <td className='border px-4 py-2 text-center'>{user.is_superuser ? "Yes" : "No"}</td>
-              <td className='px-4 py-2 border-0'>
-                {!user.is_staff && (
-                  <button
-                    onClick={() => handleApprove(user.id)}
-                    className='bg-green-700 hover:bg-green-800 text-white px-2 py-1 rounded-md'
-                  >
-                    Approve
-                  </button>
-                )}
-              </td>
+      <div className='overflow-x-auto'>
+        <table className='border-collapse w-full overflow-x-auto'>
+          <thead>
+            <tr>
+              <th className='border px-4 py-2'>User</th>
+              <th className='border px-4 py-2'>Email</th>
+              <th className='border px-4 py-2'>Staff</th>
+              <th className='border px-4 py-2'>Admin</th>
+              <th className=' px-4 py-2 border-0 '></th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {users.map((user, index) => (
+              <tr key={index}>
+                <td className='border px-4 py-2 text-center'>{user.username}</td>
+                <td className='border px-4 py-2 text-center'>{user.email}</td>
+                <td className='border px-4 py-2 text-center'>{user.is_staff ? "Yes" : "No"}</td>
+                <td className='border px-4 py-2 text-center'>{user.is_superuser ? "Yes" : "No"}</td>
+                <td className='px-4 py-2 border-0'>
+                  {!user.is_staff && (
+                    <button
+                      onClick={() => handleApprove(user.id)}
+                      className='bg-green-700 hover:bg-green-800 text-white px-2 py-1 rounded-md'
+                    >
+                      Approve
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

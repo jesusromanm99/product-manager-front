@@ -46,7 +46,7 @@ const CreateUserPage = () => {
   };
 
   return (
-    <PageContainer maxW='max-w-lg'>
+    <PageContainer maxW='max-w-xs md:max-w-lg'>
       <PageTitle title='Create an account' />
       <form onSubmit={handleSubmit} className='space-y-4'>
         <div>

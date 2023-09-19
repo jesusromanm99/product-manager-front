@@ -20,7 +20,7 @@ function LoginPage() {
   };
   return (
     <section className='flex justify-center items-center h-screen w-screen '>
-      <div className='bg-white border rounded-md w-1/3 px-10 py-8 '>
+      <div className='bg-white border rounded-md md:w-1/3 px-10 py-8 '>
         <h1 className='text-xl font-semibold inline-block border-b-2 border-b-orange-500 mb-5'>
           Sing in to your account
         </h1>

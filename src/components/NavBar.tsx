@@ -26,13 +26,13 @@ function NavBar({ children }: { children: React.ReactNode }) {
           {LINKS.map((link, index) => (
             <li
               key={index}
-              className='px-2 py-2 text-white font-semibold hover:bg-white hover:rounded-md hover:text-orange-500 hover:cursor-pointer '
+              className='px-2 py-2 group text-white font-semibold hover:bg-white hover:rounded-md hover:text-orange-500 hover:cursor-pointer '
             >
               <Link
                 to={link.href}
                 className={`px-2 py-2  font-semibold ${
                   pathname == link.href ? "bg-white text-orange-500 rounded-md" : "text-white"
-                } hover:bg-white hover:rounded-md hover:text-orange-500 hover:cursor-pointer `}
+                } group-hover:bg-white group-hover:rounded-md group-hover:text-orange-500 group-hover:cursor-pointer `}
               >
                 <FontAwesomeIcon icon={link.icon} className='mr-1' /> {link.label}
               </Link>
